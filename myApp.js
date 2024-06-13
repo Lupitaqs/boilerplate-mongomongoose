@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 dotenv.config({path: 'sample.env'});
 
 const mongoose = require('mongoose');
-let Person;
+const { Schema, model } = mongoose; // Destructuring for creating a schema and model
 
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
@@ -13,6 +13,15 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
   .catch((err) => {
     console.log('Error connecting to the database');
   })
+
+// Create a schema
+const personSchema = new Schema({
+  name: { type: String, required: true },
+  age: Number,
+  favoriteFoods: [String]
+});
+
+let Person = model('Person', personSchema);
 
 const createAndSavePerson = (done) => {
   done(null /*, data*/);
