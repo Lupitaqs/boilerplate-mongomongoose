@@ -37,8 +37,18 @@ const createAndSavePerson = (done) => {
   });
 };
 
+// Create many people with `Model.create()`
+let arrayOfPeople = [
+  {name: "Zack", age: 32, favoriteFoods: ["tacos"]},
+  {name: "Lupita", age: 27, favoriteFoods: ["pasta"]},
+  {name: "Bruno", age: 4, favoriteFoods: ["roast chicken"]},
+];
+
 const createManyPeople = (arrayOfPeople, done) => {
-  done(null /*, data*/);
+  Person.create(arrayOfPeople, function(err, people) {
+    if (err) return console.log(err);
+    done(null, people);
+  });
 };
 
 const findPeopleByName = (personName, done) => {
