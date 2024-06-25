@@ -59,8 +59,12 @@ const findPeopleByName = (personName, done) => {
   });
 };
 
+// Use Model.findOne() to just find one person which has a certain food in the person's favourite
 const findOneByFood = (food, done) => {
-  done(null /*, data*/);
+  Person.findOne({favoriteFoods: food}, function (err, data) {
+    if (err) return console.log(err);
+    done(null, data);
+  });
 };
 
 const findPersonById = (personId, done) => {
