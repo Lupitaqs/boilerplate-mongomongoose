@@ -115,16 +115,27 @@ const removeById = (personId, done) => {
   ); 
 };
 
+// Use Model.remove() to delete many documents 
 const removeManyPeople = (done) => {
   const nameToRemove = "Mary";
 
-  done(null /*, data*/);
+  Person.remove({name: nameToRemove}, (err, response) => {
+    if(err) return console.log(err);
+    done(null, response);
+  })
 };
 
+// Chain search query helpers to narrow search results
 const queryChain = (done) => {
   const foodToSearch = "burrito";
 
-  done(null /*, data*/);
+  Person.find({ favoriteFoods: foodToSearch})
+    .sort({ name: 1 })
+    .limit(2)
+    .select({ age: 0})
+    .exec((err, data) => { 
+      done(null, data)
+    });
 };
 
 /** **Well Done !!**
